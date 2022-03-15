@@ -2,9 +2,9 @@
 #include <io.h>
 using namespace std;
 
-char plane[9];
-char current_player = 'x';
 bool isCorrect;
+char plane[9], current_player = 'x';
+int move_number = 0, game_state = 0;
 
 void setup() {
 	for (int i = 0; i < 9; i++) {
@@ -41,18 +41,31 @@ void char_placer(int index) {
 		plane[index] = current_player;
 		isCorrect = true;
 	}
-	else isCorrect = false; 
+	else isCorrect = false;
+}
+
+void win_checker() {
+	int to_check[] = { 2,4,5,6,8 };
+	for (int x : to_check) {
+
+	}
 }
 
 void game_loop() {
-	while (!false) {
+	while (game_state == 0) {
 		isCorrect = false;
+		move_number++;
 		print();
 		cout << (char)0xa << "Tura " << current_player << " ";
 		while (!isCorrect) {
 			char_placer(take_input());
 		}
 		player_switcher();
+		if (move_number == 9) {
+			print();
+			cout <<endl<<"Draw"<<endl;
+			game_state = -1;
+		}
 	}
 }
 
