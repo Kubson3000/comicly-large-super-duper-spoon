@@ -4,7 +4,7 @@ using namespace std;
 
 char plane[9];
 char current_player = 'x';
-
+bool isCorrect;
 
 void setup() {
 	for (int i = 0; i < 9; i++) {
@@ -35,20 +35,23 @@ void player_switcher() {
 	else current_player = 'x';
 }
 
-bool char_placer(int index) {
+void char_placer(int index) {
 	index--;
 	if (plane[index] == ' ') {
 		plane[index] = current_player;
-		return true;
+		isCorrect = true;
 	}
-	else return false; 
+	else isCorrect = false; 
 }
 
 void game_loop() {
 	while (!false) {
+		isCorrect = false;
 		print();
 		cout << (char)0xa << "Tura " << current_player << " ";
-		char_placer(take_input());
+		while (!isCorrect) {
+			char_placer(take_input());
+		}
 		player_switcher();
 	}
 }
