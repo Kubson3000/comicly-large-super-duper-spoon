@@ -18,7 +18,6 @@ void game_loop();
 int main() {
 	setup();
 	game_loop();
-
 	return 0;
 }
 
@@ -42,6 +41,7 @@ void print() {
 		cout << "[" << plane[i] << "] ";
 
 	}
+	cout << "\n";
 }
 void player_switcher() {
 	if (current_player == 'x') current_player = 'o';
@@ -56,9 +56,9 @@ void char_placer(int index) {
 	else isCorrect = false;
 }
 void win_checker() {
-	int vertical[] = { 4,5,6 };
-	int horizontal[] = { 2,5,8 };
-	int cross[] = { 5 };
+	int vertical[] = { 3,4,5 };
+	int horizontal[] = { 1,4,7 };
+	int cross[] = { 4 };
 	for (int x : vertical) {
 		if (plane[x] != ' ') {
 			if ((plane[x] == plane[x - 3]) && (plane[x] == plane[x + 3])) {
