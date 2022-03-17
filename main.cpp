@@ -45,9 +45,36 @@ void char_placer(int index) {
 }
 
 void win_checker() {
-	int to_check[] = { 2,4,5,6,8 };
-	for (int x : to_check) {
-
+	int vertical[] = { 4,5,6 };
+	int horizontal[] = { 2,5,7 };
+	int cross[] = { 5 };
+	for (int x : vertical) {
+		if (plane[x] != ' ') {
+			if ((plane[x] == plane[x - 3]) && (plane[x] == plane[x + 3])) {
+				cout << "Winner: " << plane[x] << "\n";
+				game_state = -1;
+			}
+		}
+	}
+	for (int x : horizontal) {
+		if (plane[x] != ' ') {
+			if ((plane[x] == plane[x - 1]) && (plane[x] == plane[x + 1])) {
+				cout << "Winner: " << plane[x] << "\n";
+				game_state = -1;
+			}
+		}
+	}
+	for (int x : cross) {
+		if (plane[x] != ' ') {
+			if ((plane[x] == plane[x - 4]) && (plane[x] == plane[x + 4])) {
+				cout << "Winner: " << plane[x] << "\n";
+				game_state = -1;
+			}
+			if ((plane[x] == plane[x - 2]) && (plane[x] == plane[x + 2])) {
+				cout << "Winner: " << plane[x] << "\n";
+				game_state = -1;
+			}
+		}
 	}
 }
 
@@ -56,6 +83,7 @@ void game_loop() {
 		isCorrect = false;
 		move_number++;
 		print();
+		win_checker();
 		cout << (char)0xa << "Tura " << current_player << " ";
 		while (!isCorrect) {
 			char_placer(take_input());
@@ -63,7 +91,7 @@ void game_loop() {
 		player_switcher();
 		if (move_number == 9) {
 			print();
-			cout <<endl<<"Draw"<<endl;
+			cout << endl << "Draw" << endl;
 			game_state = -1;
 		}
 	}
