@@ -27,12 +27,12 @@ void setup() {
 	}
 }
 int take_input() {
-	int number = -1;
-	while (number > 9 || number < 1) {
+	char number = 0xa;
+	while ((int)number > 57 || (int)number < 49) {
 		cout << "Podaj liczbe [1-9]: ";
 		cin >> number;
 	}
-	return number;
+	return (int)number-48;
 }
 void print() {
 	system("cls");
