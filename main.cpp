@@ -5,6 +5,7 @@ using namespace std;
 bool isCorrect;
 char plane[9], current_player = 'x';
 int move_number = 0, game_state = 0;
+int score_x = 0, score_o = 0;
 
 void setup();
 int take_input();
@@ -13,6 +14,8 @@ void player_switcher();
 void char_placer(int index);
 void win_checker();
 void game_loop();
+void continue_game();
+void scoreboard_update();
 
 
 int main() {
@@ -32,10 +35,11 @@ int take_input() {
 		cout << "Podaj liczbe [1-9]: ";
 		cin >> number;
 	}
-	return (int)number-48;
+	return (int)number - 48;
 }
 void print() {
 	system("cls");
+	cout << "X: " << score_x << " O: " << score_o << endl;
 	for (int i = 0; i < 9; i++) {
 		if (i % 3 == 0) cout << (char)0xa;
 		cout << "[" << plane[i] << "] ";
@@ -64,6 +68,8 @@ void win_checker() {
 			if ((plane[x] == plane[x - 3]) && (plane[x] == plane[x + 3])) {
 				cout << "Winner: " << plane[x] << "\n";
 				game_state = -1;
+				scoreboard_update();
+				continue_game();
 			}
 		}
 	}
@@ -72,6 +78,8 @@ void win_checker() {
 			if ((plane[x] == plane[x - 1]) && (plane[x] == plane[x + 1])) {
 				cout << "Winner: " << plane[x] << "\n";
 				game_state = -1;
+				scoreboard_update();
+				continue_game();
 			}
 		}
 	}
@@ -80,10 +88,14 @@ void win_checker() {
 			if ((plane[x] == plane[x - 4]) && (plane[x] == plane[x + 4])) {
 				cout << "Winner: " << plane[x] << "\n";
 				game_state = -1;
+				scoreboard_update();
+				continue_game();
 			}
 			if ((plane[x] == plane[x - 2]) && (plane[x] == plane[x + 2])) {
 				cout << "Winner: " << plane[x] << "\n";
 				game_state = -1;
+				scoreboard_update();
+				continue_game();
 			}
 		}
 	}
@@ -106,4 +118,24 @@ void game_loop() {
 			game_state = -1;
 		}
 	}
+}
+void continue_game() {
+	char input = 'a';
+	while (true) {
+		cout << endl << "Would you like to continue? [y/n]" << endl;
+		cin >> input;
+		if (input == 'y') {
+			setup();
+			game_state = 0;
+			move_number = 0;
+			game_loop();
+		}
+		if (input == 'n') {
+			break;
+		}
+	}
+}
+void scoreboard_update() {
+	if (current_player == 'o') score_x++;
+	else score_o++;
 }
